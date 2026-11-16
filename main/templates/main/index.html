@@ -372,9 +372,9 @@
 
             <div class="mt-7 flex flex-wrap gap-3" role="tablist" aria-label="стани цілісності">
                 {% for s in states %}
-                <button type="button" role="tab" aria-selected="{% if forloop.first %}true{% else %}false{% endif %}" data-state="{{ s.key }}" id="tab-{{ s.key }}" class="state-tab{% if forloop.first %} active{% endif %} inner-3d-card px-5 py-3 text-sm font-medium flex items-center gap-2.5">
-                    <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="{{ s.icon_path }}"/></svg>
-                    <span>{{ s.tab_label }}</span>
+                <button type="button" role="tab" aria-selected="{% if forloop.first %}true{% else %}false{% endif %}" data-state="{{ s.key }}" id="tab-{{ s.key }}" class="state-tab{% if forloop.first %} active{% endif %} inner-3d-card px-5 py-3 text-sm font-medium flex items-center gap-2.5 cursor-pointer select-none" style="touch-action: manipulation;">
+                    <svg class="w-5 h-5 shrink-0 pointer-events-none" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="{{ s.icon_path }}"/></svg>
+                    <span class="pointer-events-none">{{ s.tab_label }}</span>
                 </button>
                 {% endfor %}
             </div>
@@ -382,12 +382,12 @@
             <div id="state-panel" role="tabpanel" aria-live="polite" class="mt-6 inner-3d-card static-card p-6 md:p-8 grid grid-cols-1 md:grid-cols-12 gap-6 items-center">
                 <div class="md:col-span-8 space-y-4">
                     <div class="flex items-center gap-4">
-                        <div class="icon-3d-box w-14 h-14 shrink-0 flex items-center justify-center text-lime-700">
-                            <svg class="w-7 h-7" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24" aria-hidden="true"><path id="state-icon" stroke-linecap="round" stroke-linejoin="round" d=""/></svg>
+                        <div id="state-icon-box" class="icon-3d-box w-14 h-14 shrink-0 flex items-center justify-center text-lime-700">
+                            <svg class="w-7 h-7" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24" aria-hidden="true"><path id="state-icon" stroke-linecap="round" stroke-linejoin="round" d="{{ states.0.icon_path }}"/></svg>
                         </div>
-                        <h3 id="state-title" class="font-serif text-2xl md:text-3xl font-semibold text-lime-900"></h3>
+                        <h3 id="state-title" class="font-serif text-2xl md:text-3xl font-semibold text-lime-900">{{ states.0.title }}</h3>
                     </div>
-                    <p id="state-desc" class="text-lime-900/80 leading-relaxed text-sm md:text-base" style="white-space: pre-line"></p>
+                    <p id="state-desc" class="text-lime-900/80 leading-relaxed text-sm md:text-base" style="white-space: pre-line">{{ states.0.description }}</p>
                 </div>
                 <div class="md:col-span-4 flex flex-col items-start md:items-end justify-center">
                     <button id="state-cta" type="button" data-topic="" class="open-booking btn-lime px-6 py-3.5 rounded-2xl text-sm font-semibold">
@@ -598,9 +598,12 @@
             document.querySelectorAll('.state-tab').forEach(btn => {
                 const on = btn.dataset.state === key;
                 btn.classList.toggle('active', on);
-                btn.setAttribute('aria-selected', on);
+                btn.setAttribute('aria-selected', on ? 'true' : 'false');
             });
-            document.getElementById('state-icon').setAttribute('d', d.icon_path);
+            const iconBox = document.getElementById('state-icon-box');
+            if (iconBox) {
+                iconBox.innerHTML = `<svg class="w-7 h-7" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24" aria-hidden="true"><path id="state-icon" stroke-linecap="round" stroke-linejoin="round" d="${d.icon_path}"/></svg>`;
+            }
             document.getElementById('state-title').textContent = d.title;
             document.getElementById('state-desc').textContent = d.description;
             document.getElementById('state-cta').dataset.topic = d.booking_topic;
@@ -609,7 +612,14 @@
             void panel.offsetWidth;
             panel.classList.add('panel-fade');
         }
-        document.querySelectorAll('.state-tab').forEach(b => b.addEventListener('click', () => switchState(b.dataset.state)));
+        document.querySelectorAll('.state-tab').forEach(b => {
+            const onSelect = (e) => {
+                if (e.type === 'touchend') e.preventDefault();
+                switchState(b.dataset.state);
+            };
+            b.addEventListener('click', onSelect);
+            b.addEventListener('touchend', onSelect, { passive: false });
+        });
         const firstTab = document.querySelector('.state-tab');
         if (firstTab) switchState(firstTab.dataset.state);
 
