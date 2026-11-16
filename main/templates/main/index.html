@@ -125,6 +125,56 @@
             transform: translateY(0) !important;
         }
 
+        /* Фірмовий брендинг логотипу в хедері */
+        .brand-wordmark {
+            font-family: 'Cormorant Garamond', Georgia, serif;
+            font-size: 1.8rem;
+            line-height: 0.95;
+            font-weight: 600;
+            letter-spacing: 0.03em;
+            color: #172410;
+            display: inline-flex;
+            align-items: baseline;
+            transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+        @media (min-width: 768px) {
+            .brand-wordmark { font-size: 2.15rem; }
+        }
+        .brand-sub {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 0.65rem;
+            font-weight: 600;
+            letter-spacing: 0.22em;
+            color: #4D7C0F;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            margin-top: 4px;
+            line-height: 1;
+            transition: color 0.3s ease;
+        }
+        @media (min-width: 768px) {
+            .brand-sub { font-size: 0.72rem; letter-spacing: 0.24em; }
+        }
+        .brand-sub::before {
+            content: '';
+            display: inline-block;
+            width: 14px;
+            height: 1.5px;
+            background: #84CC16;
+            border-radius: 1px;
+            opacity: 0.85;
+            transition: width 0.3s ease, background-color 0.3s ease;
+        }
+        .group:hover .brand-sub::before {
+            width: 22px;
+            background: #65A30D;
+        }
+        .group:hover .brand-wordmark {
+            color: #2D4A12;
+            letter-spacing: 0.045em;
+        }
+
         .btn-lime {
             background: linear-gradient(135deg, #84CC16 0%, #65A30D 100%);
             color: #FFFDF9;
@@ -245,13 +295,15 @@
     <header class="sticky top-4 z-40 max-w-6xl mx-auto px-4">
         <nav class="glass-nav rounded-3xl px-4 md:px-5 py-3" aria-label="головна навігація">
             <div class="flex items-center justify-between gap-3">
-                <a href="#" class="flex items-center gap-3 group" aria-label="mizhnami — на початок">
-                    <svg class="w-16 h-12 md:w-24 md:h-16 transition-transform duration-300 group-hover:scale-105" aria-hidden="true">
-                        <use href="#customLotusLogo"></use>
-                    </svg>
-                    <div class="flex flex-col">
-                        <span class="font-serif text-xl md:text-2xl font-semibold tracking-tight text-lime-900">mizhnami</span>
-                        <span class="text-xs text-lime-700 hidden sm:block">простір опори</span>
+                <a href="#" class="flex items-center gap-2.5 sm:gap-3 group select-none" aria-label="mizhnami — на початок">
+                    <div class="relative flex items-center justify-center shrink-0">
+                        <svg class="w-12 h-9 sm:w-14 sm:h-10 md:w-16 md:h-12 transition-all duration-300 group-hover:scale-105 group-hover:-rotate-1" aria-hidden="true">
+                            <use href="#customLotusLogo"></use>
+                        </svg>
+                    </div>
+                    <div class="flex flex-col justify-center">
+                        <span class="brand-wordmark">mizhnami</span>
+                        <span class="brand-sub">простір опори</span>
                     </div>
                 </a>
 
