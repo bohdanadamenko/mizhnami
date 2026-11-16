@@ -191,6 +191,33 @@
             transform: scale(1.08);
         }
 
+        /* Плашки-бейджи назв розділів із фірмовою зеленою крапкою */
+        .section-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            padding: 5px 14px;
+            border-radius: 9999px;
+            background-color: #ECFCCB;
+            color: #365314;
+            border: 1px solid rgba(132, 204, 22, 0.4);
+            box-shadow: 0 1px 3px 0 rgba(45, 74, 18, 0.05);
+            width: fit-content;
+            line-height: 1;
+        }
+        .section-badge::before {
+            content: '';
+            display: inline-block;
+            width: 7px;
+            height: 7px;
+            border-radius: 9999px;
+            background-color: #65A30D;
+            box-shadow: 0 0 0 2px rgba(132, 204, 22, 0.25);
+            flex-shrink: 0;
+        }
+
         .btn-lime {
             background: linear-gradient(135deg, #84CC16 0%, #65A30D 100%);
             color: #FFFDF9;
@@ -385,7 +412,7 @@
 
             <div class="lg:col-span-4 volumetric-card no-lift p-7 flex flex-col justify-between space-y-5">
                 <div class="flex items-center justify-between">
-                    <span class="text-xs font-semibold px-3 py-1 rounded-full bg-beige-200 text-lime-900/70">три точки уваги</span>
+                    <span class="section-badge">три точки уваги</span>
                     <svg class="w-14 h-10 lotus-float" aria-hidden="true"><use href="#customLotusLogo"></use></svg>
                 </div>
 
@@ -426,7 +453,7 @@
         <!-- 2. Цілісність підходу -->
         <section id="philosophy" class="volumetric-card no-lift p-8 md:p-11 reveal">
             <div class="max-w-3xl space-y-3">
-                <span class="text-xs font-semibold px-3.5 py-1 rounded-full bg-lime-100 text-lime-700 border border-lime-500/30">цілісність підходу</span>
+                <span class="section-badge">цілісність підходу</span>
                 <h2 class="font-serif text-3xl md:text-4xl font-semibold text-lime-900">
                     цілісність: тіло, почуття, думки
                 </h2>
@@ -477,7 +504,7 @@
                 </figure>
                 <div class="space-y-4">
                     <div class="flex items-center justify-between">
-                        <span class="text-xs font-semibold px-3.5 py-1 rounded-full bg-lime-100 text-lime-700 border border-lime-500/30">мій шлях і досвід</span>
+                        <span class="section-badge">мій шлях і досвід</span>
                         <svg class="w-16 h-11" aria-hidden="true"><use href="#customLotusLogo"></use></svg>
                     </div>
 
@@ -539,7 +566,7 @@
         <section id="requests" class="space-y-5 reveal">
             <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 px-2">
                 <div>
-                    <span class="text-xs font-semibold px-3.5 py-1 rounded-full bg-lime-100 text-lime-700 border border-lime-500/30">з чим ми працюємо</span>
+                    <span class="section-badge">з чим ми працюємо</span>
                     <h2 class="font-serif text-3xl md:text-4xl font-semibold text-lime-900 mt-2">теми для наших душевних розмов</h2>
                 </div>
                 <p class="text-sm text-lime-900/70 max-w-md">
@@ -566,7 +593,7 @@
         <!-- 5. Формат -->
         <section id="format" class="volumetric-card no-lift p-8 md:p-11 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center reveal">
             <div class="lg:col-span-7 space-y-5">
-                <span class="text-xs font-semibold px-3.5 py-1 rounded-full bg-lime-100 text-lime-700 border border-lime-500/30">формат зустрічей</span>
+                <span class="section-badge">формат зустрічей</span>
                 <h2 class="font-serif text-3xl md:text-4xl font-semibold text-lime-900">як проходять наші розмови</h2>
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div class="inner-3d-card p-4">
@@ -584,7 +611,7 @@
 
             <div class="lg:col-span-5 inner-3d-card static-card p-6 md:p-8 flex flex-col justify-between space-y-5">
                 <div class="space-y-2">
-                    <span class="text-xs font-semibold text-lime-700">перший крок</span>
+                    <span class="section-badge">перший крок</span>
                     <h3 class="font-serif text-2xl font-semibold text-lime-900">готові до чесності з собою?</h3>
                     <p class="text-xs md:text-sm text-lime-900/75 leading-relaxed">
                         залиште коротку заявку на сайті — ми оберемо комфортний день та час.
@@ -619,7 +646,7 @@
                 <div class="flex items-center gap-3 pr-10">
                     <svg class="w-14 h-10 shrink-0" aria-hidden="true"><use href="#customLotusLogo"></use></svg>
                     <div>
-                        <span class="text-xs font-semibold text-lime-700">запис на зустріч</span>
+                        <span class="section-badge mb-1.5">запис на зустріч</span>
                         <h3 id="modal-title" class="font-serif text-2xl font-semibold text-lime-900">почати нашу розмову</h3>
                     </div>
                 </div>
