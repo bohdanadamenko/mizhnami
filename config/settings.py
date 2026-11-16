@@ -48,13 +48,16 @@ if not SECRET_KEY or SECRET_KEY == 'change-me':
 
 ALLOWED_HOSTS = [h for h in os.environ.get('DJANGO_ALLOWED_HOSTS', 'localhost,127.0.0.1').split(',') if h]
 
-# Дозволяємо vercel.app та довіряємо HTTPS-заголовкам проксі (Vercel)
+# Дозволяємо vercel.app, власний домен mizhnami.space та довіряємо HTTPS-заголовкам проксі (Vercel)
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
-if '.vercel.app' not in ALLOWED_HOSTS:
-    ALLOWED_HOSTS.append('.vercel.app')
+for _host in ('.vercel.app', '.mizhnami.space', 'mizhnami.space'):
+    if _host not in ALLOWED_HOSTS:
+        ALLOWED_HOSTS.append(_host)
 
 CSRF_TRUSTED_ORIGINS = [
     'https://*.vercel.app',
+    'https://mizhnami.space',
+    'https://*.mizhnami.space',
 ] + [o for o in os.environ.get('DJANGO_CSRF_TRUSTED_ORIGINS', '').split(',') if o]
 
 for _h in (os.environ.get('VERCEL_URL'), os.environ.get('VERCEL_PROJECT_PRODUCTION_URL')):
