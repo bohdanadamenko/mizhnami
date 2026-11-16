@@ -1,0 +1,760 @@
+{% load static %}<!DOCTYPE html>
+<html lang="uk" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>простір опори — місце для душевних розмов | психологічна підтримка онлайн</title>
+    <meta name="description" content="індивідуальна онлайн-психологічна підтримка: контакт із собою, тілом і своїми виборами. без засудження, оцінок та поспіху. конфіденційно.">
+    <meta name="theme-color" content="#FAF8F2">
+    <meta property="og:title" content="простір опори — місце для душевних розмов">
+    <meta property="og:description" content="розмови про себе, своє тіло і свої вибори. онлайн, бережно та конфіденційно.">
+    <meta property="og:type" content="website">
+    <link rel="stylesheet" href="{% static 'main/css/tailwind.css' %}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { text-transform: lowercase !important; }
+        section[id] { scroll-margin-top: 110px; }
+
+        body { background-color: #FAF8F2; color: #1E2916; overflow-x: hidden; }
+
+        #bg-canvas { position: fixed; inset: 0; width: 100vw; height: 100vh; z-index: 0; pointer-events: none; }
+
+        :focus-visible { outline: 3px solid #84CC16; outline-offset: 3px; border-radius: 12px; }
+
+        .volumetric-card {
+            background: rgba(255, 253, 249, 0.72);
+            backdrop-filter: blur(24px) saturate(140%);
+            -webkit-backdrop-filter: blur(24px) saturate(140%);
+            border-radius: 28px;
+            border: 1.5px solid rgba(255, 255, 255, 0.85);
+            border-bottom: 2px solid rgba(101, 163, 13, 0.28);
+            box-shadow:
+                0 0 0 1px rgba(101, 163, 13, 0.12),
+                0 20px 40px -15px rgba(30, 41, 22, 0.08),
+                0 1px 3px 0 rgba(30, 41, 22, 0.04),
+                inset 0 1.5px 0 0 rgba(255, 255, 255, 0.95);
+            transition: all 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+        .volumetric-card:hover {
+            transform: translateY(-4px);
+            border-color: rgba(255, 255, 255, 0.95);
+            box-shadow:
+                0 0 0 1px rgba(101, 163, 13, 0.22),
+                0 28px 50px -15px rgba(45, 74, 18, 0.15),
+                inset 0 2px 0 0 rgba(255, 255, 255, 1);
+        }
+        /* карточки-контейнери великих секцій не "стрибають" */
+        .no-lift:hover { transform: none; }
+
+        .inner-3d-card {
+            background: rgba(255, 255, 255, 0.65);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-radius: 20px;
+            border: 1.5px solid rgba(255, 255, 255, 0.8);
+            border-bottom: 2px solid rgba(101, 163, 13, 0.2);
+            box-shadow:
+                0 0 0 1px rgba(101, 163, 13, 0.08),
+                0 10px 24px -8px rgba(30, 41, 22, 0.06),
+                inset 0 1.5px 0 0 rgba(255, 255, 255, 0.9);
+            transition: all 0.28s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+        .inner-3d-card:hover {
+            transform: translateY(-2.5px);
+            background: rgba(255, 255, 255, 0.88);
+            border-color: rgba(101, 163, 13, 0.3);
+            box-shadow:
+                0 0 0 1.5px rgba(101, 163, 13, 0.18),
+                0 14px 28px -6px rgba(45, 74, 18, 0.12),
+                inset 0 1.5px 0 0 #FFFFFF;
+        }
+        .static-card:hover { transform: none; }
+
+        .icon-3d-box {
+            background: linear-gradient(135deg, rgba(247, 254, 231, 0.9), rgba(236, 252, 203, 0.8));
+            backdrop-filter: blur(8px);
+            border: 1.5px solid rgba(255, 255, 255, 0.9);
+            border-bottom: 2px solid rgba(101, 163, 13, 0.35);
+            border-radius: 16px;
+            box-shadow:
+                0 0 0 1px rgba(101, 163, 13, 0.12),
+                0 8px 18px -4px rgba(101, 163, 13, 0.2),
+                inset 0 1.5px 0 0 #FFFFFF;
+            transition: all 0.3s ease;
+        }
+        .volumetric-card:hover .icon-3d-box,
+        .inner-3d-card:hover .icon-3d-box {
+            background: linear-gradient(135deg, #ECFCCB, #BEF264);
+            transform: scale(1.05) translateY(-2px);
+            box-shadow: 0 10px 22px -4px rgba(101, 163, 13, 0.35), inset 0 1.5px 0 0 #FFFFFF;
+        }
+
+        .glass-nav {
+            background: rgba(255, 253, 249, 0.75);
+            backdrop-filter: blur(20px) saturate(130%);
+            -webkit-backdrop-filter: blur(20px) saturate(130%);
+            border: 1.5px solid rgba(255, 255, 255, 0.85);
+            border-bottom: 2px solid rgba(101, 163, 13, 0.25);
+            box-shadow:
+                0 0 0 1px rgba(101, 163, 13, 0.1),
+                0 16px 32px -8px rgba(30, 41, 22, 0.08),
+                inset 0 1.5px 0 0 rgba(255, 255, 255, 0.9);
+        }
+        .nav-link {
+            position: relative;
+            padding: 0.55rem 1.05rem;
+            border-radius: 9999px;
+            color: #1E2916;
+            font-weight: 500;
+            border: 1.5px solid transparent;
+            transition: all 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+            display: inline-flex;
+            align-items: center;
+        }
+        .nav-link:hover {
+            color: #1E2916 !important;
+            background: linear-gradient(135deg, #ECFCCB 0%, #D9F99D 100%) !important;
+            border-color: rgba(101, 163, 13, 0.45) !important;
+            border-bottom: 2px solid rgba(77, 124, 15, 0.6) !important;
+            transform: translateY(-2px) !important;
+            box-shadow: 0 6px 16px -3px rgba(101, 163, 13, 0.35), inset 0 1.5px 0 0 #FFFFFF !important;
+        }
+        .nav-link:active {
+            transform: translateY(0) !important;
+        }
+
+        .btn-lime {
+            background: linear-gradient(135deg, #84CC16 0%, #65A30D 100%);
+            color: #FFFDF9;
+            border: 1.5px solid #4D7C0F;
+            border-bottom: 3.5px solid #365314;
+            box-shadow:
+                0 0 0 2px rgba(132, 204, 22, 0.22),
+                0 10px 20px -5px rgba(101, 163, 13, 0.4),
+                inset 0 1px 0 0 rgba(255, 255, 255, 0.4);
+            transition: all 0.25s ease;
+        }
+        .btn-lime:hover {
+            transform: translateY(-2px);
+            background: linear-gradient(135deg, #A3E635 0%, #65A30D 100%);
+            box-shadow:
+                0 0 0 4px rgba(132, 204, 22, 0.28),
+                0 14px 26px -5px rgba(101, 163, 13, 0.5),
+                inset 0 1px 0 0 rgba(255, 255, 255, 0.5);
+        }
+        .btn-lime:active { transform: translateY(1px); }
+
+        .state-tab.active {
+            background: linear-gradient(135deg, #ECFCCB 0%, #BEF264 100%);
+            border-color: #65A30D;
+            color: #1E2916;
+            font-weight: 600;
+            box-shadow: 0 4px 12px rgba(101, 163, 13, 0.25);
+        }
+
+        /* поява при скролі */
+        .reveal { opacity: 0; transform: translateY(24px); transition: opacity .8s ease, transform .8s cubic-bezier(0.22, 1, 0.36, 1); }
+        .reveal.visible { opacity: 1; transform: none; }
+
+        /* анімація панелі стану */
+        .panel-fade { animation: panelFade .45s ease; }
+        @keyframes panelFade { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+
+        /* ілюстрація з м’якими краями */
+        .about-figure { overflow: hidden; border-radius: 20px; }
+        .about-figure img {
+            -webkit-mask-image: radial-gradient(ellipse 80% 85% at 50% 50%, #000 55%, transparent 100%);
+            mask-image: radial-gradient(ellipse 80% 85% at 50% 50%, #000 55%, transparent 100%);
+            mix-blend-mode: multiply;
+            transition: transform 1.2s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+        #about:hover .about-figure img { transform: scale(1.04); }
+
+        /* модальне вікно */
+        #booking-modal.open { display: flex; animation: panelFade .3s ease; }
+        #booking-modal.open > div { animation: modalPop .45s cubic-bezier(0.22, 1, 0.36, 1); }
+        @keyframes modalPop { from { opacity: 0; transform: translateY(18px) scale(.96); } to { opacity: 1; transform: none; } }
+
+        /* смуга прогресу скролу */
+        #scroll-progress {
+            position: fixed; top: 0; left: 0; height: 3px; width: 100%; z-index: 60;
+            background: linear-gradient(90deg, #BEF264, #65A30D);
+            transform-origin: left; transform: scaleX(0);
+        }
+
+        /* каскадна поява дочірніх елементів */
+        .stagger > * { opacity: 0; transform: translateY(20px); transition: opacity .7s ease, transform .7s cubic-bezier(0.22, 1, 0.36, 1); transition-delay: calc(var(--i, 0) * 90ms); }
+        .stagger.visible > * { opacity: 1; transform: none; }
+        /* після появи повертаємо швидкі hover-переходи */
+        .stagger.settled > * { transition-delay: 0s; transition-duration: .35s; }
+
+        /* лотос ніби дихає */
+        .lotus-float { animation: lotusFloat 6s ease-in-out infinite; }
+        @keyframes lotusFloat { 0%, 100% { transform: translateY(0) rotate(0); } 50% { transform: translateY(-6px) rotate(-1.5deg); } }
+
+        /* поява hero */
+        .hero-in > * { animation: heroIn .9s cubic-bezier(0.22, 1, 0.36, 1) both; animation-delay: calc(var(--i, 0) * 120ms + 100ms); }
+        @keyframes heroIn { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: none; } }
+
+        /* галочка успіху */
+        .success-pop { animation: successPop .6s cubic-bezier(0.34, 1.56, 0.64, 1); }
+        @keyframes successPop { from { opacity: 0; transform: scale(.4) rotate(-12deg); } to { opacity: 1; transform: none; } }
+
+        /* навігація при скролі */
+        header nav { transition: padding .3s ease, box-shadow .3s ease; }
+        header.scrolled nav { padding-top: .4rem; padding-bottom: .4rem; }
+
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after { animation: none !important; transition: none !important; }
+            .reveal, .stagger > * { opacity: 1; transform: none; }
+            #scroll-progress { display: none; }
+        }
+    </style>
+</head>
+<body class="antialiased selection:bg-lime-300 selection:text-lime-900">
+
+    <svg width="0" height="0" class="hidden" aria-hidden="true">
+        <defs>
+            <filter id="sketchTexture" x="-10%" y="-10%" width="120%" height="120%">
+                <feTurbulence type="fractalNoise" baseFrequency="0.06" numOctaves="2" result="noise" />
+                <feDisplacementMap in="SourceGraphic" in2="noise" scale="1.2" xChannelSelector="R" yChannelSelector="G" />
+            </filter>
+            <symbol id="customLotusLogo" viewBox="0 0 220 150">
+                <g filter="url(#sketchTexture)" fill="none" stroke="#0A0A0A" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M110 112 C 82 82, 84 42, 110 12 C 136 42, 138 82, 110 112 Z" stroke-width="4.2" />
+                    <path d="M104 112 C 66 96, 52 60, 44 38 C 74 44, 102 68, 108 110" stroke-width="4" />
+                    <path d="M116 112 C 154 96, 168 60, 176 38 C 146 44, 118 68, 112 110" stroke-width="4" />
+                    <path d="M94 115 C 62 126, 34 116, 16 104 C 38 82, 74 82, 98 108" stroke-width="4" />
+                    <path d="M122 108 C 146 82, 182 82, 204 104 C 184 118, 154 126, 128 114 C 114 108, 100 112, 98 124 C 96 135, 108 142, 117 136 C 123 132, 121 123, 114 123 C 110 123, 109 127, 112 129" stroke-width="4.2" />
+                    <circle cx="110" cy="56" r="5.5" fill="#0A0A0A" stroke="none" />
+                    <circle cx="72" cy="70" r="5" fill="#0A0A0A" stroke="none" />
+                    <circle cx="148" cy="70" r="5" fill="#0A0A0A" stroke="none" />
+                    <circle cx="52" cy="103" r="4.8" fill="#0A0A0A" stroke="none" />
+                    <circle cx="168" cy="103" r="4.8" fill="#0A0A0A" stroke="none" />
+                </g>
+            </symbol>
+        </defs>
+    </svg>
+
+    <div id="scroll-progress" aria-hidden="true"></div>
+    <canvas id="bg-canvas" aria-hidden="true"></canvas>
+
+    <!-- Навігація -->
+    <header class="sticky top-4 z-40 max-w-6xl mx-auto px-4">
+        <nav class="glass-nav rounded-3xl px-4 md:px-5 py-3" aria-label="головна навігація">
+            <div class="flex items-center justify-between gap-3">
+                <a href="#" class="flex items-center gap-3 group" aria-label="простір опори — на початок">
+                    <svg class="w-16 h-12 md:w-24 md:h-16 transition-transform duration-300 group-hover:scale-105" aria-hidden="true">
+                        <use href="#customLotusLogo"></use>
+                    </svg>
+                    <div class="flex flex-col">
+                        <span class="font-serif text-xl md:text-2xl font-semibold tracking-tight text-lime-900">простір опори</span>
+                        <span class="text-xs text-lime-700 hidden sm:block">психологічна підтримка</span>
+                    </div>
+                </a>
+
+                <div class="hidden md:flex items-center gap-2 text-sm">
+                    <a href="#philosophy" class="nav-link">цілісність підходу</a>
+                    <a href="#about" class="nav-link">мій шлях</a>
+                    <a href="#requests" class="nav-link">запити</a>
+                    <a href="#format" class="nav-link">формат та етика</a>
+                </div>
+
+                <div class="flex items-center gap-2">
+                    <button type="button" data-topic="загальний запит на знайомство" class="open-booking btn-lime hidden sm:block px-5 py-2.5 rounded-2xl text-sm font-semibold">
+                        записатися на розмову
+                    </button>
+                    <button id="menu-toggle" type="button" aria-expanded="false" aria-controls="mobile-menu" aria-label="відкрити меню" class="md:hidden inner-3d-card static-card w-11 h-11 flex items-center justify-center text-lime-900">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 7h16M4 12h16M4 17h16"/></svg>
+                    </button>
+                </div>
+            </div>
+
+            <div id="mobile-menu" class="hidden md:hidden pt-4 mt-3 border-t border-lime-600/20 flex-col gap-1 text-sm font-medium text-lime-900">
+                <a href="#philosophy" class="mobile-link block px-3 py-2.5 rounded-xl hover:bg-lime-100">цілісність підходу</a>
+                <a href="#about" class="mobile-link block px-3 py-2.5 rounded-xl hover:bg-lime-100">мій шлях</a>
+                <a href="#requests" class="mobile-link block px-3 py-2.5 rounded-xl hover:bg-lime-100">запити</a>
+                <a href="#format" class="mobile-link block px-3 py-2.5 rounded-xl hover:bg-lime-100">формат та етика</a>
+                <button type="button" data-topic="загальний запит на знайомство" class="open-booking btn-lime mt-2 w-full px-5 py-3 rounded-2xl text-sm font-semibold">записатися на розмову</button>
+            </div>
+        </nav>
+    </header>
+
+    <main class="relative z-10 max-w-6xl mx-auto px-4 pt-8 pb-20 space-y-8">
+
+        <!-- 1. Hero -->
+        <section class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch reveal">
+            <div class="lg:col-span-8 volumetric-card no-lift p-8 md:p-12 flex flex-col justify-between">
+                <div class="space-y-6 hero-in">
+                    <div style="--i:0" class="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-lime-100 border border-lime-500/40 text-lime-700 text-xs font-semibold">
+                        <span class="w-2 h-2 rounded-full bg-lime-500 animate-pulse"></span>
+                        індивідуальний онлайн-простір психологічної підтримки
+                    </div>
+
+                    <h1 style="--i:1" class="font-serif text-4xl sm:text-5xl md:text-6xl leading-[1.12] font-semibold text-lime-900 tracking-tight">
+                        місце для душевних розмов про себе, своє тіло і свої <span class="text-lime-600 font-semibold not-italic">вибори.</span>
+                    </h1>
+
+                    <p style="--i:2" class="text-lg md:text-xl text-lime-900/80 max-w-2xl leading-relaxed">
+                        допомагаю бути в контакті з собою: говорити з собою чесно, слухати тіло і знаходити опору. без засудження, оцінок та поспіху.
+                    </p>
+                </div>
+
+                <div class="pt-8 flex flex-wrap items-center gap-4">
+                    <button type="button" data-topic="перша ознайомча розмова" class="open-booking btn-lime px-7 py-4 rounded-2xl text-base font-semibold flex items-center gap-3">
+                        <span>почати нашу розмову</span>
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+                        </svg>
+                    </button>
+                    <a href="#philosophy" class="inner-3d-card px-6 py-3.5 text-sm font-semibold text-lime-900">
+                        дізнатися про підхід
+                    </a>
+                </div>
+            </div>
+
+            <div class="lg:col-span-4 volumetric-card no-lift p-7 flex flex-col justify-between space-y-5">
+                <div class="flex items-center justify-between">
+                    <span class="text-xs font-semibold px-3 py-1 rounded-full bg-beige-200 text-lime-900/70">три точки уваги</span>
+                    <svg class="w-14 h-10 lotus-float" aria-hidden="true"><use href="#customLotusLogo"></use></svg>
+                </div>
+
+                <div class="space-y-3.5 stagger">
+                    <div class="inner-3d-card p-4 flex items-start gap-3.5">
+                        <div class="icon-3d-box w-11 h-11 shrink-0 flex items-center justify-center text-lime-700">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>
+                        </div>
+                        <div>
+                            <h2 class="font-semibold text-lime-900">про себе</h2>
+                            <p class="text-xs text-lime-900/75 mt-0.5 leading-relaxed">говорити з собою чесно, розуміти свої емоції та прибирати самокритику.</p>
+                        </div>
+                    </div>
+
+                    <div class="inner-3d-card p-4 flex items-start gap-3.5">
+                        <div class="icon-3d-box w-11 h-11 shrink-0 flex items-center justify-center text-lime-700">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
+                        </div>
+                        <div>
+                            <h2 class="font-semibold text-lime-900">про своє тіло</h2>
+                            <p class="text-xs text-lime-900/75 mt-0.5 leading-relaxed">помічати тривогу, тілесні затиски і повертати стан безпеки через рух і дихання.</p>
+                        </div>
+                    </div>
+
+                    <div class="inner-3d-card p-4 flex items-start gap-3.5">
+                        <div class="icon-3d-box w-11 h-11 shrink-0 flex items-center justify-center text-lime-700">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7"/></svg>
+                        </div>
+                        <div>
+                            <h2 class="font-semibold text-lime-900">про свої вибори</h2>
+                            <p class="text-xs text-lime-900/75 mt-0.5 leading-relaxed">виходити з дитячої позиції, брати відповідальність і робити свідомі кроки.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 2. Цілісність підходу -->
+        <section id="philosophy" class="volumetric-card no-lift p-8 md:p-11 reveal">
+            <div class="max-w-3xl space-y-3">
+                <span class="text-xs font-semibold px-3.5 py-1 rounded-full bg-lime-100 text-lime-700 border border-lime-500/30">цілісність підходу</span>
+                <h2 class="font-serif text-3xl md:text-4xl font-semibold text-lime-900">
+                    цілісність: тіло, почуття, думки
+                </h2>
+                <p class="text-lime-900/80 text-base md:text-lg leading-relaxed">
+                    тіло, почуття й думки мають бути зʼєднані, тоді з’являється відчуття цілісності. якщо цей звʼязок порушується, ми застрягаємо на одному з полюсів.
+                </p>
+                <p class="text-lime-900/75 text-base leading-relaxed">
+                    оберіть стан, який вам зараз ближчий:
+                </p>
+            </div>
+
+            <div class="mt-7 flex flex-wrap gap-3" role="tablist" aria-label="стани цілісності">
+                {% for s in states %}
+                <button type="button" role="tab" aria-selected="{% if forloop.first %}true{% else %}false{% endif %}" data-state="{{ s.key }}" id="tab-{{ s.key }}" class="state-tab{% if forloop.first %} active{% endif %} inner-3d-card px-5 py-3 text-sm font-medium flex items-center gap-2.5">
+                    <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="{{ s.icon_path }}"/></svg>
+                    <span>{{ s.tab_label }}</span>
+                </button>
+                {% endfor %}
+            </div>
+
+            <div id="state-panel" role="tabpanel" aria-live="polite" class="mt-6 inner-3d-card static-card p-6 md:p-8 grid grid-cols-1 md:grid-cols-12 gap-6 items-center">
+                <div class="md:col-span-8 space-y-4">
+                    <div class="flex items-center gap-4">
+                        <div class="icon-3d-box w-14 h-14 shrink-0 flex items-center justify-center text-lime-700">
+                            <svg class="w-7 h-7" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24" aria-hidden="true"><path id="state-icon" stroke-linecap="round" stroke-linejoin="round" d=""/></svg>
+                        </div>
+                        <h3 id="state-title" class="font-serif text-2xl md:text-3xl font-semibold text-lime-900"></h3>
+                    </div>
+                    <p id="state-desc" class="text-lime-900/80 leading-relaxed text-sm md:text-base" style="white-space: pre-line"></p>
+                </div>
+                <div class="md:col-span-4 flex flex-col items-start md:items-end justify-center">
+                    <button id="state-cta" type="button" data-topic="" class="open-booking btn-lime px-6 py-3.5 rounded-2xl text-sm font-semibold">
+                        обговорити цей стан
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- 3. Про мене -->
+        <section id="about" class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch reveal">
+            <div class="lg:col-span-7 volumetric-card no-lift p-8 md:p-10 flex flex-col justify-between space-y-6">
+                <figure class="about-figure -mt-4 -mx-2">
+                    <img src="{% static 'main/img/about.jpg' %}" alt="жінка у медитативній позі серед лотосів" width="1200" height="896" loading="lazy" decoding="async" class="w-full h-56 md:h-64 object-cover object-center">
+                </figure>
+                <div class="space-y-4">
+                    <div class="flex items-center justify-between">
+                        <span class="text-xs font-semibold px-3.5 py-1 rounded-full bg-lime-100 text-lime-700 border border-lime-500/30">мій шлях і досвід</span>
+                        <svg class="w-16 h-11" aria-hidden="true"><use href="#customLotusLogo"></use></svg>
+                    </div>
+
+                    <h2 class="font-serif text-3xl md:text-4xl font-semibold text-lime-900">
+                        від відчуття «дитини в тілі дорослої» — до свідомих виборів
+                    </h2>
+
+                    <p class="text-lime-900/80 leading-relaxed">
+                        сама я довго жила як дитина в тілі дорослої — коли здавалося, що справжні рішення ухвалює хтось інший, а життя просто трапляється зі мною. зараз я вчуся брати відповідальність і робити свідомі вибори, і цей живий досвід стає основою моєї роботи.
+                    </p>
+
+                    <p class="text-lime-900/80 leading-relaxed">
+                        я маю освіту психолога та пройшла навчання з танцювально-рухової терапії. вже шість років я практикую йогу, вчуся спостерігати за собою без оцінки, розуміти свої емоції, помічати тривогу і не критикувати себе. саме цим бережним контактом я ділюся на наших зустрічах.
+                    </p>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-3.5 pt-2">
+                    <div class="inner-3d-card p-4">
+                        <span class="font-serif text-2xl font-semibold text-lime-700">освіта</span>
+                        <p class="text-xs text-lime-900/75 mt-1">дипломований психолог + танцювально-рухова терапія</p>
+                    </div>
+                    <div class="inner-3d-card p-4">
+                        <span class="font-serif text-2xl font-semibold text-lime-700">6 років</span>
+                        <p class="text-xs text-lime-900/75 mt-1">регулярної практики йоги та тілесної усвідомленості</p>
+                    </div>
+                    <div class="inner-3d-card p-4">
+                        <span class="font-serif text-2xl font-semibold text-lime-700">без оцінки</span>
+                        <p class="text-xs text-lime-900/75 mt-1">простір без критики, де можна бути справжньою</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="lg:col-span-5 volumetric-card no-lift p-8 md:p-10 flex flex-col justify-between space-y-6">
+                <div class="space-y-4">
+                    <div class="icon-3d-box w-12 h-12 flex items-center justify-center text-lime-700">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+                    </div>
+
+                    <h3 class="font-serif text-2xl md:text-3xl font-semibold text-lime-900">чесні межі та безпека</h3>
+
+                    <p class="text-lime-900/80 leading-relaxed text-sm md:text-base">
+                        я не психотерапевт і не замінюю медичну чи психіатричну допомогу. моя сфера — це психологічна підтримка, розвиток самоусвідомлення, контакт із тілом та опора у життєвих виборах.
+                    </p>
+
+                    <div class="inner-3d-card static-card p-4 border-l-4 border-l-lime-600">
+                        <p class="text-xs md:text-sm text-lime-900/85 leading-relaxed">
+                            якщо під час нашого спілкування ми побачимо, що вам потрібна підтримка медичного чи психотерапевтичного рівня — я чесно скажу про це і дбайливо допоможу знайти профільного фахівця.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="pt-2">
+                    <span class="text-xs text-lime-700 font-medium">гарантія повної конфіденційності кожної розмови</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- 4. Запити -->
+        <section id="requests" class="space-y-5 reveal">
+            <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 px-2">
+                <div>
+                    <span class="text-xs font-semibold px-3.5 py-1 rounded-full bg-lime-100 text-lime-700 border border-lime-500/30">з чим ми працюємо</span>
+                    <h2 class="font-serif text-3xl md:text-4xl font-semibold text-lime-900 mt-2">теми для наших душевних розмов</h2>
+                </div>
+                <p class="text-sm text-lime-900/70 max-w-md">
+                    натисніть на будь-яку картку, щоб одразу записатися на консультацію з цим запитом
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 stagger">
+                {% for topic in topics %}
+                <button type="button" data-topic="{{ topic.booking_topic }}" class="open-booking volumetric-card p-6 text-left flex flex-col justify-between space-y-5">
+                    <div class="space-y-4">
+                        <div class="icon-3d-box w-12 h-12 flex items-center justify-center text-lime-700">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="{{ topic.icon_path }}"/></svg>
+                        </div>
+                        <h3 class="font-serif text-2xl font-semibold text-lime-900">{{ topic.title }}</h3>
+                        <p class="text-xs md:text-sm text-lime-900/75 leading-relaxed">{{ topic.description }}</p>
+                    </div>
+                    <span class="text-xs font-semibold text-lime-700">обрати тему →</span>
+                </button>
+                {% endfor %}
+            </div>
+        </section>
+
+        <!-- 5. Формат -->
+        <section id="format" class="volumetric-card no-lift p-8 md:p-11 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center reveal">
+            <div class="lg:col-span-7 space-y-5">
+                <span class="text-xs font-semibold px-3.5 py-1 rounded-full bg-lime-100 text-lime-700 border border-lime-500/30">формат зустрічей</span>
+                <h2 class="font-serif text-3xl md:text-4xl font-semibold text-lime-900">як проходять наші розмови</h2>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div class="inner-3d-card p-4">
+                        <span class="text-xs text-lime-700 font-semibold">онлайн-простір</span>
+                        <p class="font-semibold text-lime-900 mt-1">google meet / zoom / telegram</p>
+                        <p class="text-xs text-lime-900/70 mt-1">з будь-якого куточка світу у затишній для вас обстановці</p>
+                    </div>
+                    <div class="inner-3d-card p-4">
+                        <span class="text-xs text-lime-700 font-semibold">тривалість</span>
+                        <p class="font-semibold text-lime-900 mt-1">50–60 хвилин</p>
+                        <p class="text-xs text-lime-900/70 mt-1">достатньо часу, щоб сповільнитися, поговорити і послухати тіло</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="lg:col-span-5 inner-3d-card static-card p-6 md:p-8 flex flex-col justify-between space-y-5">
+                <div class="space-y-2">
+                    <span class="text-xs font-semibold text-lime-700">перший крок</span>
+                    <h3 class="font-serif text-2xl font-semibold text-lime-900">готові до чесності з собою?</h3>
+                    <p class="text-xs md:text-sm text-lime-900/75 leading-relaxed">
+                        залиште коротку заявку на сайті — ми оберемо комфортний день та час.
+                    </p>
+                </div>
+                <button type="button" data-topic="запис на індивідуальну консультацію" class="open-booking btn-lime w-full py-4 rounded-2xl text-sm font-semibold">
+                    відкрити форму запису
+                </button>
+            </div>
+        </section>
+    </main>
+
+    <footer class="relative z-10 max-w-6xl mx-auto px-4 pb-12">
+        <div class="volumetric-card no-lift p-6 md:p-8 flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div class="flex items-center gap-3">
+                <svg class="w-16 h-12" aria-hidden="true"><use href="#customLotusLogo"></use></svg>
+                <div>
+                    <p class="font-serif text-lg font-semibold text-lime-900">душевні розмови про себе, своє тіло і свої вибори</p>
+                    <p class="text-xs text-lime-900/65">психологічна підтримка • тілесна усвідомленість • опора</p>
+                </div>
+            </div>
+            <p class="text-xs text-lime-900/60">© 2026 усі права захищені. бережно та конфіденційно.</p>
+        </div>
+    </footer>
+
+    <!-- Модальне вікно запису -->
+    <div id="booking-modal" role="dialog" aria-modal="true" aria-labelledby="modal-title" class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-lime-900/35 backdrop-blur-sm">
+        <div class="volumetric-card no-lift max-w-md w-full p-7 md:p-8 relative max-h-[92vh] overflow-y-auto">
+            <button type="button" id="modal-close" aria-label="закрити" class="absolute top-5 right-5 w-9 h-9 rounded-full inner-3d-card static-card flex items-center justify-center text-lime-900">✕</button>
+
+            <div id="booking-form-container" class="space-y-5">
+                <div class="flex items-center gap-3 pr-10">
+                    <svg class="w-14 h-10 shrink-0" aria-hidden="true"><use href="#customLotusLogo"></use></svg>
+                    <div>
+                        <span class="text-xs font-semibold text-lime-700">запис на зустріч</span>
+                        <h3 id="modal-title" class="font-serif text-2xl font-semibold text-lime-900">почати нашу розмову</h3>
+                    </div>
+                </div>
+
+                <form id="booking-form" method="post" action="{% url 'main:booking' %}" class="space-y-4">
+                    {% csrf_token %}
+                    <div class="hidden" aria-hidden="true"><input type="text" name="website" tabindex="-1" autocomplete="off"></div>
+                    <div>
+                        <label for="booking-name" class="block text-xs font-semibold text-lime-900/80 mb-1.5">як до вас звертатися?</label>
+                        <input id="booking-name" name="name" type="text" required autocomplete="given-name" placeholder="ваше ім’я" class="w-full inner-3d-card static-card px-4 py-3 text-sm focus:outline-none focus:border-lime-600">
+                    </div>
+                    <div>
+                        <label for="booking-contact" class="block text-xs font-semibold text-lime-900/80 mb-1.5">ваш telegram або інший контакт</label>
+                        <input id="booking-contact" name="contact" type="text" required placeholder="@username або номер телефону" class="w-full inner-3d-card static-card px-4 py-3 text-sm focus:outline-none focus:border-lime-600">
+                    </div>
+                    <div>
+                        <label for="booking-topic" class="block text-xs font-semibold text-lime-900/80 mb-1.5">про що б хотілося поговорити?</label>
+                        <textarea id="booking-topic" name="topic" rows="3" placeholder="коротко опишіть свій стан або питання..." class="w-full inner-3d-card static-card px-4 py-3 text-sm focus:outline-none focus:border-lime-600"></textarea>
+                    </div>
+                    <label class="flex items-start gap-2.5 text-xs text-lime-900/75 leading-relaxed cursor-pointer">
+                        <input type="checkbox" required class="mt-0.5 accent-lime-600">
+                        <span>погоджуюся на обробку моїх контактних даних лише для зв’язку зі мною. все залишається конфіденційним.</span>
+                    </label>
+                    <p id="booking-error" class="hidden text-xs text-red-700">не вдалося надіслати. перевірте поля та спробуйте ще раз.</p>
+                    <button type="submit" class="btn-lime w-full py-3.5 rounded-2xl text-sm font-semibold">надіслати запит</button>
+                </form>
+            </div>
+
+            <div id="booking-success" class="hidden text-center py-6 space-y-4">
+                <div class="icon-3d-box success-pop w-14 h-14 mx-auto flex items-center justify-center text-lime-700">✓</div>
+                <h4 class="font-serif text-2xl font-semibold text-lime-900">дякую за довіру!</h4>
+                <p class="text-sm text-lime-900/75 leading-relaxed">ваш запит збережено. я зв’яжуся з вами найближчим часом, щоб обрати затишний час для нашої розмови.</p>
+                <button type="button" id="success-close" class="inner-3d-card px-6 py-2.5 text-xs font-semibold text-lime-900">повернутися на сайт</button>
+            </div>
+        </div>
+    </div>
+
+    {{ states|json_script:"states-data" }}
+    <script>
+        // ---- стани цілісності (дані з content.py) ----
+        const statesData = Object.fromEntries(
+            JSON.parse(document.getElementById('states-data').textContent).map(s => [s.key, s])
+        );
+
+        function switchState(key) {
+            const d = statesData[key];
+            if (!d) return;
+            document.querySelectorAll('.state-tab').forEach(btn => {
+                const on = btn.dataset.state === key;
+                btn.classList.toggle('active', on);
+                btn.setAttribute('aria-selected', on);
+            });
+            document.getElementById('state-icon').setAttribute('d', d.icon_path);
+            document.getElementById('state-title').textContent = d.title;
+            document.getElementById('state-desc').textContent = d.description;
+            document.getElementById('state-cta').dataset.topic = d.booking_topic;
+            const panel = document.getElementById('state-panel');
+            panel.classList.remove('panel-fade');
+            void panel.offsetWidth;
+            panel.classList.add('panel-fade');
+        }
+        document.querySelectorAll('.state-tab').forEach(b => b.addEventListener('click', () => switchState(b.dataset.state)));
+        const firstTab = document.querySelector('.state-tab');
+        if (firstTab) switchState(firstTab.dataset.state);
+
+        // ---- модальне вікно ----
+        const modal = document.getElementById('booking-modal');
+        const formBox = document.getElementById('booking-form-container');
+        const successBox = document.getElementById('booking-success');
+        const form = document.getElementById('booking-form');
+        let lastFocus = null;
+
+        function openBookingModal(topic = '') {
+            lastFocus = document.activeElement;
+            formBox.classList.remove('hidden');
+            successBox.classList.add('hidden');
+            document.getElementById('booking-topic').value = topic;
+            modal.classList.add('open');
+            document.body.style.overflow = 'hidden';
+            setTimeout(() => document.getElementById('booking-name').focus(), 50);
+        }
+        function closeBookingModal() {
+            modal.classList.remove('open');
+            document.body.style.overflow = '';
+            if (lastFocus) lastFocus.focus();
+        }
+        document.addEventListener('click', e => {
+            const t = e.target.closest('.open-booking');
+            if (t) openBookingModal(t.dataset.topic || '');
+        });
+        document.getElementById('modal-close').addEventListener('click', closeBookingModal);
+        document.getElementById('success-close').addEventListener('click', closeBookingModal);
+        modal.addEventListener('click', e => { if (e.target === modal) closeBookingModal(); });
+        document.addEventListener('keydown', e => { if (e.key === 'Escape' && modal.classList.contains('open')) closeBookingModal(); });
+
+        form.addEventListener('submit', async e => {
+            e.preventDefault();
+            const btn = form.querySelector('button[type=submit]');
+            const errBox = document.getElementById('booking-error');
+            errBox.classList.add('hidden');
+            btn.disabled = true;
+            try {
+                const res = await fetch(form.action, {
+                    method: 'POST',
+                    body: new FormData(form),
+                    headers: { 'X-Requested-With': 'XMLHttpRequest' }
+                });
+                if (!res.ok) throw new Error('bad status ' + res.status);
+                form.reset();
+                formBox.classList.add('hidden');
+                successBox.classList.remove('hidden');
+            } catch (err) {
+                errBox.classList.remove('hidden');
+            } finally {
+                btn.disabled = false;
+            }
+        });
+
+        // ---- мобільне меню ----
+        const menu = document.getElementById('mobile-menu');
+        const toggle = document.getElementById('menu-toggle');
+        function setMenu(open) {
+            menu.classList.toggle('hidden', !open);
+            menu.classList.toggle('flex', open);
+            toggle.setAttribute('aria-expanded', open);
+        }
+        toggle.addEventListener('click', () => setMenu(menu.classList.contains('hidden')));
+        document.querySelectorAll('.mobile-link, #mobile-menu .open-booking').forEach(a => a.addEventListener('click', () => setMenu(false)));
+
+        // ---- поява при скролі ----
+        const io = new IntersectionObserver(entries => {
+            entries.forEach(en => { if (en.isIntersecting) { en.target.classList.add('visible'); io.unobserve(en.target); } });
+        }, { threshold: 0.08 });
+        document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+        // ---- каскад дочірніх елементів ----
+        const staggerIo = new IntersectionObserver(entries => {
+            entries.forEach(en => {
+                if (!en.isIntersecting) return;
+                const el = en.target;
+                el.classList.add('visible');
+                staggerIo.unobserve(el);
+                setTimeout(() => el.classList.add('settled'), 700 + el.children.length * 90);
+            });
+        }, { threshold: 0.1 });
+        document.querySelectorAll('.stagger').forEach(el => {
+            [...el.children].forEach((c, i) => c.style.setProperty('--i', i));
+            staggerIo.observe(el);
+        });
+
+        // ---- прогрес скролу та стан навігації ----
+        const progress = document.getElementById('scroll-progress');
+        const header = document.querySelector('header');
+        let ticking = false;
+        function onScroll() {
+            const max = document.documentElement.scrollHeight - window.innerHeight;
+            progress.style.transform = 'scaleX(' + (max > 0 ? window.scrollY / max : 0) + ')';
+            header.classList.toggle('scrolled', window.scrollY > 40);
+            ticking = false;
+        }
+        window.addEventListener('scroll', () => {
+            if (!ticking) { ticking = true; requestAnimationFrame(onScroll); }
+        }, { passive: true });
+        onScroll();
+
+        // ---- фонова анімація ----
+        const canvas = document.getElementById('bg-canvas');
+        const ctx = canvas.getContext('2d');
+        const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        let width, height, mouseX = 0, mouseY = 0;
+
+        function resize() {
+            const dpr = Math.min(window.devicePixelRatio || 1, 2);
+            width = window.innerWidth; height = window.innerHeight;
+            canvas.width = width * dpr; canvas.height = height * dpr;
+            ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+        }
+        window.addEventListener('resize', resize);
+        resize();
+
+        window.addEventListener('mousemove', e => {
+            mouseX = (e.clientX / width - 0.5) * 30;
+            mouseY = (e.clientY / height - 0.5) * 30;
+        });
+
+        const orbs = [
+            { x: 0.2, y: 0.25, r: 280, color: 'rgba(163, 230, 53, 0.20)', speed: 0.0008, offset: 0 },
+            { x: 0.8, y: 0.35, r: 340, color: 'rgba(132, 204, 22, 0.16)', speed: 0.0006, offset: 2 },
+            { x: 0.5, y: 0.78, r: 300, color: 'rgba(230, 223, 206, 0.55)', speed: 0.0007, offset: 4 }
+        ];
+
+        function animate(t) {
+            ctx.clearRect(0, 0, width, height);
+            orbs.forEach((orb, idx) => {
+                const ox = orb.x * width + Math.sin(t * orb.speed + orb.offset) * 55 + mouseX * (idx + 1) * 0.4;
+                const oy = orb.y * height + Math.cos(t * orb.speed + orb.offset) * 45 + mouseY * (idx + 1) * 0.4;
+                const g = ctx.createRadialGradient(ox, oy, 10, ox, oy, orb.r);
+                g.addColorStop(0, orb.color);
+                g.addColorStop(1, 'rgba(250, 248, 242, 0)');
+                ctx.fillStyle = g;
+                ctx.beginPath();
+                ctx.arc(ox, oy, orb.r, 0, Math.PI * 2);
+                ctx.fill();
+            });
+            if (!reduceMotion) requestAnimationFrame(animate);
+        }
+        requestAnimationFrame(animate);
+    </script>
+</body>
+</html>
