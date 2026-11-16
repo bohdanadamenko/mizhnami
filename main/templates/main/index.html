@@ -308,28 +308,7 @@
 </head>
 <body class="antialiased selection:bg-lime-300 selection:text-lime-900">
 
-    <svg width="0" height="0" class="hidden" aria-hidden="true">
-        <defs>
-            <filter id="sketchTexture" x="-10%" y="-10%" width="120%" height="120%">
-                <feTurbulence type="fractalNoise" baseFrequency="0.06" numOctaves="2" result="noise" />
-                <feDisplacementMap in="SourceGraphic" in2="noise" scale="1.2" xChannelSelector="R" yChannelSelector="G" />
-            </filter>
-            <symbol id="customLotusLogo" viewBox="0 0 220 150">
-                <g filter="url(#sketchTexture)" fill="none" stroke="#0A0A0A" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M110 112 C 82 82, 84 42, 110 12 C 136 42, 138 82, 110 112 Z" stroke-width="4.2" />
-                    <path d="M104 112 C 66 96, 52 60, 44 38 C 74 44, 102 68, 108 110" stroke-width="4" />
-                    <path d="M116 112 C 154 96, 168 60, 176 38 C 146 44, 118 68, 112 110" stroke-width="4" />
-                    <path d="M94 115 C 62 126, 34 116, 16 104 C 38 82, 74 82, 98 108" stroke-width="4" />
-                    <path d="M122 108 C 146 82, 182 82, 204 104 C 184 118, 154 126, 128 114 C 114 108, 100 112, 98 124 C 96 135, 108 142, 117 136 C 123 132, 121 123, 114 123 C 110 123, 109 127, 112 129" stroke-width="4.2" />
-                    <circle cx="110" cy="56" r="5.5" fill="#0A0A0A" stroke="none" />
-                    <circle cx="72" cy="70" r="5" fill="#0A0A0A" stroke="none" />
-                    <circle cx="148" cy="70" r="5" fill="#0A0A0A" stroke="none" />
-                    <circle cx="52" cy="103" r="4.8" fill="#0A0A0A" stroke="none" />
-                    <circle cx="168" cy="103" r="4.8" fill="#0A0A0A" stroke="none" />
-                </g>
-            </symbol>
-        </defs>
-    </svg>
+
 
     <div id="scroll-progress" aria-hidden="true"></div>
     <canvas id="bg-canvas" aria-hidden="true"></canvas>
@@ -340,8 +319,17 @@
             <div class="flex items-center justify-between gap-3">
                 <a href="#" class="flex items-center gap-2.5 sm:gap-3 group select-none" aria-label="mizhnami — на початок">
                     <div class="relative flex items-center justify-center shrink-0">
-                        <svg class="brand-logo-icon" aria-hidden="true">
-                            <use href="#customLotusLogo"></use>
+                        <svg class="brand-logo-icon" viewBox="0 0 220 150" fill="none" stroke="#1E2916" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                            <path d="M110 112 C 82 82, 84 42, 110 12 C 136 42, 138 82, 110 112 Z" stroke-width="4.2" />
+                            <path d="M104 112 C 66 96, 52 60, 44 38 C 74 44, 102 68, 108 110" stroke-width="4" />
+                            <path d="M116 112 C 154 96, 168 60, 176 38 C 146 44, 118 68, 112 110" stroke-width="4" />
+                            <path d="M94 115 C 62 126, 34 116, 16 104 C 38 82, 74 82, 98 108" stroke-width="4" />
+                            <path d="M122 108 C 146 82, 182 82, 204 104 C 184 118, 154 126, 128 114 C 114 108, 100 112, 98 124 C 96 135, 108 142, 117 136 C 123 132, 121 123, 114 123 C 110 123, 109 127, 112 129" stroke-width="4.2" />
+                            <circle cx="110" cy="56" r="5.5" fill="#1E2916" stroke="none" />
+                            <circle cx="72" cy="70" r="5" fill="#1E2916" stroke="none" />
+                            <circle cx="148" cy="70" r="5" fill="#1E2916" stroke="none" />
+                            <circle cx="52" cy="103" r="4.8" fill="#1E2916" stroke="none" />
+                            <circle cx="168" cy="103" r="4.8" fill="#1E2916" stroke="none" />
                         </svg>
                     </div>
                     <div class="flex flex-col justify-center">
@@ -416,7 +404,18 @@
                         <span class="w-2 h-2 rounded-full bg-lime-500 animate-pulse shrink-0"></span>
                         три точки уваги
                     </span>
-                    <svg class="w-14 h-10 lotus-float" aria-hidden="true"><use href="#customLotusLogo"></use></svg>
+                    <svg class="w-14 h-10 lotus-float" viewBox="0 0 220 150" fill="none" stroke="#1E2916" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <path d="M110 112 C 82 82, 84 42, 110 12 C 136 42, 138 82, 110 112 Z" stroke-width="4.2" />
+                        <path d="M104 112 C 66 96, 52 60, 44 38 C 74 44, 102 68, 108 110" stroke-width="4" />
+                        <path d="M116 112 C 154 96, 168 60, 176 38 C 146 44, 118 68, 112 110" stroke-width="4" />
+                        <path d="M94 115 C 62 126, 34 116, 16 104 C 38 82, 74 82, 98 108" stroke-width="4" />
+                        <path d="M122 108 C 146 82, 182 82, 204 104 C 184 118, 154 126, 128 114 C 114 108, 100 112, 98 124 C 96 135, 108 142, 117 136 C 123 132, 121 123, 114 123 C 110 123, 109 127, 112 129" stroke-width="4.2" />
+                        <circle cx="110" cy="56" r="5.5" fill="#1E2916" stroke="none" />
+                        <circle cx="72" cy="70" r="5" fill="#1E2916" stroke="none" />
+                        <circle cx="148" cy="70" r="5" fill="#1E2916" stroke="none" />
+                        <circle cx="52" cy="103" r="4.8" fill="#1E2916" stroke="none" />
+                        <circle cx="168" cy="103" r="4.8" fill="#1E2916" stroke="none" />
+                    </svg>
                 </div>
 
                 <div class="space-y-3.5 stagger">
@@ -514,7 +513,18 @@
                             <span class="w-2 h-2 rounded-full bg-lime-500 animate-pulse shrink-0"></span>
                             мій шлях і досвід
                         </span>
-                        <svg class="w-16 h-11" aria-hidden="true"><use href="#customLotusLogo"></use></svg>
+                        <svg class="w-16 h-11" viewBox="0 0 220 150" fill="none" stroke="#1E2916" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                            <path d="M110 112 C 82 82, 84 42, 110 12 C 136 42, 138 82, 110 112 Z" stroke-width="4.2" />
+                            <path d="M104 112 C 66 96, 52 60, 44 38 C 74 44, 102 68, 108 110" stroke-width="4" />
+                            <path d="M116 112 C 154 96, 168 60, 176 38 C 146 44, 118 68, 112 110" stroke-width="4" />
+                            <path d="M94 115 C 62 126, 34 116, 16 104 C 38 82, 74 82, 98 108" stroke-width="4" />
+                            <path d="M122 108 C 146 82, 182 82, 204 104 C 184 118, 154 126, 128 114 C 114 108, 100 112, 98 124 C 96 135, 108 142, 117 136 C 123 132, 121 123, 114 123 C 110 123, 109 127, 112 129" stroke-width="4.2" />
+                            <circle cx="110" cy="56" r="5.5" fill="#1E2916" stroke="none" />
+                            <circle cx="72" cy="70" r="5" fill="#1E2916" stroke="none" />
+                            <circle cx="148" cy="70" r="5" fill="#1E2916" stroke="none" />
+                            <circle cx="52" cy="103" r="4.8" fill="#1E2916" stroke="none" />
+                            <circle cx="168" cy="103" r="4.8" fill="#1E2916" stroke="none" />
+                        </svg>
                     </div>
 
                     <h2 class="font-serif text-3xl md:text-4xl font-semibold text-lime-900">
@@ -612,14 +622,14 @@
                 <h2 class="font-serif text-3xl md:text-4xl font-semibold text-lime-900">як проходять наші розмови</h2>
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div class="inner-3d-card p-4">
-                        <span class="text-xs text-lime-700 font-semibold">онлайн-простір</span>
-                        <p class="font-semibold text-lime-900 mt-1">google meet / zoom / telegram</p>
-                        <p class="text-xs text-lime-900/70 mt-1">з будь-якого куточка світу у затишній для вас обстановці</p>
+                        <span class="text-xs text-lime-700 font-semibold">простір</span>
+                        <p class="font-semibold text-lime-900 mt-1">у студії в Одесі або онлайн</p>
+                        <p class="text-xs text-lime-900/70 mt-1">з будь-якого куточка світу у місці, яке вам комфортне</p>
                     </div>
                     <div class="inner-3d-card p-4">
                         <span class="text-xs text-lime-700 font-semibold">тривалість</span>
-                        <p class="font-semibold text-lime-900 mt-1">50–60 хвилин</p>
-                        <p class="text-xs text-lime-900/70 mt-1">достатньо часу, щоб сповільнитися, поговорити і послухати тіло</p>
+                        <p class="font-semibold text-lime-900 mt-1">60–75 хвилин</p>
+                        <p class="text-xs text-lime-900/70 mt-1">достатньо часу, щоб глибше почути себе і знайти опору в тілі</p>
                     </div>
                 </div>
             </div>
@@ -645,7 +655,18 @@
     <footer class="relative z-10 max-w-6xl mx-auto px-4 pb-12">
         <div class="volumetric-card no-lift p-6 md:p-8 flex flex-col sm:flex-row items-center justify-between gap-4">
             <div class="flex items-center gap-4">
-                <svg class="footer-logo-icon" width="84" height="58" viewBox="0 0 220 150" aria-hidden="true"><use href="#customLotusLogo"></use></svg>
+                <svg class="footer-logo-icon" width="84" height="58" viewBox="0 0 220 150" fill="none" stroke="#1E2916" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M110 112 C 82 82, 84 42, 110 12 C 136 42, 138 82, 110 112 Z" stroke-width="4.2" />
+                    <path d="M104 112 C 66 96, 52 60, 44 38 C 74 44, 102 68, 108 110" stroke-width="4" />
+                    <path d="M116 112 C 154 96, 168 60, 176 38 C 146 44, 118 68, 112 110" stroke-width="4" />
+                    <path d="M94 115 C 62 126, 34 116, 16 104 C 38 82, 74 82, 98 108" stroke-width="4" />
+                    <path d="M122 108 C 146 82, 182 82, 204 104 C 184 118, 154 126, 128 114 C 114 108, 100 112, 98 124 C 96 135, 108 142, 117 136 C 123 132, 121 123, 114 123 C 110 123, 109 127, 112 129" stroke-width="4.2" />
+                    <circle cx="110" cy="56" r="5.5" fill="#1E2916" stroke="none" />
+                    <circle cx="72" cy="70" r="5" fill="#1E2916" stroke="none" />
+                    <circle cx="148" cy="70" r="5" fill="#1E2916" stroke="none" />
+                    <circle cx="52" cy="103" r="4.8" fill="#1E2916" stroke="none" />
+                    <circle cx="168" cy="103" r="4.8" fill="#1E2916" stroke="none" />
+                </svg>
                 <div>
                     <p class="font-serif text-lg font-semibold text-lime-900">місце, де можна почути себе, відчути тіло і довіритися своїм виборам</p>
                     <p class="text-xs text-lime-900/65">психологічна підтримка • тілесна усвідомленість • опора</p>
@@ -662,7 +683,18 @@
 
             <div id="booking-form-container" class="space-y-5">
                 <div class="flex items-center gap-3 pr-10">
-                    <svg class="w-14 h-10 shrink-0" aria-hidden="true"><use href="#customLotusLogo"></use></svg>
+                    <svg class="w-14 h-10 shrink-0" viewBox="0 0 220 150" fill="none" stroke="#1E2916" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <path d="M110 112 C 82 82, 84 42, 110 12 C 136 42, 138 82, 110 112 Z" stroke-width="4.2" />
+                        <path d="M104 112 C 66 96, 52 60, 44 38 C 74 44, 102 68, 108 110" stroke-width="4" />
+                        <path d="M116 112 C 154 96, 168 60, 176 38 C 146 44, 118 68, 112 110" stroke-width="4" />
+                        <path d="M94 115 C 62 126, 34 116, 16 104 C 38 82, 74 82, 98 108" stroke-width="4" />
+                        <path d="M122 108 C 146 82, 182 82, 204 104 C 184 118, 154 126, 128 114 C 114 108, 100 112, 98 124 C 96 135, 108 142, 117 136 C 123 132, 121 123, 114 123 C 110 123, 109 127, 112 129" stroke-width="4.2" />
+                        <circle cx="110" cy="56" r="5.5" fill="#1E2916" stroke="none" />
+                        <circle cx="72" cy="70" r="5" fill="#1E2916" stroke="none" />
+                        <circle cx="148" cy="70" r="5" fill="#1E2916" stroke="none" />
+                        <circle cx="52" cy="103" r="4.8" fill="#1E2916" stroke="none" />
+                        <circle cx="168" cy="103" r="4.8" fill="#1E2916" stroke="none" />
+                    </svg>
                     <div>
                         <span class="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-lime-100 border border-lime-500/40 text-lime-700 text-xs font-semibold mb-1.5">
                             <span class="w-2 h-2 rounded-full bg-lime-500 animate-pulse shrink-0"></span>
