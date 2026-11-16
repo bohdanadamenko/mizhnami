@@ -191,6 +191,20 @@
             transform: scale(1.08);
         }
 
+        .footer-logo-icon {
+            width: 76px;
+            height: 52px;
+            flex-shrink: 0;
+            display: block;
+            transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+        @media (min-width: 768px) {
+            .footer-logo-icon {
+                width: 84px;
+                height: 58px;
+            }
+        }
+
         /* Панель стану: іконки для цілісності підходу (Safari/WebKit сумісність) */
         .state-panel-icon {
             width: 28px !important;
@@ -630,8 +644,8 @@
 
     <footer class="relative z-10 max-w-6xl mx-auto px-4 pb-12">
         <div class="volumetric-card no-lift p-6 md:p-8 flex flex-col sm:flex-row items-center justify-between gap-4">
-            <div class="flex items-center gap-3">
-                <svg class="w-16 h-12" aria-hidden="true"><use href="#customLotusLogo"></use></svg>
+            <div class="flex items-center gap-4">
+                <svg class="footer-logo-icon" width="84" height="58" viewBox="0 0 220 150" aria-hidden="true"><use href="#customLotusLogo"></use></svg>
                 <div>
                     <p class="font-serif text-lg font-semibold text-lime-900">душевні розмови про себе, своє тіло і свої вибори</p>
                     <p class="text-xs text-lime-900/65">психологічна підтримка • тілесна усвідомленість • опора</p>
