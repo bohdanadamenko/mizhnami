@@ -43,7 +43,7 @@ class Command(BaseCommand):
 
         # 2. Спроба відправки повідомлення
         self.stdout.write(f'\n2. Спроба відправити тестове повідомлення у chat_id={chat_id}...')
-        text = '🌿 Тестове повідомлення з сайту «Простір опори».\nЯкщо ви бачите це — форма запису налаштована успішно!'
+        text = '🌿 Тестове повідомлення з сайту «mizhnami — простір опори».\nЯкщо ви бачите це — форма запису налаштована успішно!'
         url = f'https://api.telegram.org/bot{token}/sendMessage'
         payload = urllib.parse.urlencode({'chat_id': chat_id, 'text': text}).encode()
 
