@@ -23,6 +23,23 @@
         }
         section[id] { scroll-margin-top: 110px; }
 
+        /* Розширені межі контенту для ПК */
+        @media (min-width: 1024px) {
+            .max-w-6xl {
+                max-width: 1200px;
+            }
+        }
+        @media (min-width: 1280px) {
+            .max-w-6xl {
+                max-width: 1320px;
+            }
+        }
+        @media (min-width: 1536px) {
+            .max-w-6xl {
+                max-width: 1420px;
+            }
+        }
+
         body { background-color: #FAF8F2; color: #1E2916; overflow-x: hidden; }
 
         #bg-canvas { position: fixed; inset: 0; width: 100vw; height: 100vh; z-index: 0; pointer-events: none; }
