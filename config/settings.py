@@ -48,21 +48,20 @@ if not SECRET_KEY or SECRET_KEY == 'change-me':
 
 ALLOWED_HOSTS = [h for h in os.environ.get('DJANGO_ALLOWED_HOSTS', 'localhost,127.0.0.1').split(',') if h]
 
-# Vercel: домени *.vercel.app та довірені origin для CSRF (форма запису)
-ON_VERCEL = bool(os.environ.get('VERCEL'))
-if ON_VERCEL:
+# Дозволяємо vercel.app та довіряємо HTTPS-заголовкам проксі (Vercel)
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+if '.vercel.app' not in ALLOWED_HOSTS:
     ALLOWED_HOSTS.append('.vercel.app')
-    SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+
 CSRF_TRUSTED_ORIGINS = [
-    o for o in os.environ.get('DJANGO_CSRF_TRUSTED_ORIGINS', '').split(',') if o
-]
-if ON_VERCEL:
-    CSRF_TRUSTED_ORIGINS += [
-        f'https://{h}' for h in (
-            os.environ.get('VERCEL_URL'),
-            os.environ.get('VERCEL_PROJECT_PRODUCTION_URL'),
-        ) if h
-    ]
+    'https://*.vercel.app',
+] + [o for o in os.environ.get('DJANGO_CSRF_TRUSTED_ORIGINS', '').split(',') if o]
+
+for _h in (os.environ.get('VERCEL_URL'), os.environ.get('VERCEL_PROJECT_PRODUCTION_URL')):
+    if _h:
+        _origin = f'https://{_h}'
+        if _origin not in CSRF_TRUSTED_ORIGINS:
+            CSRF_TRUSTED_ORIGINS.append(_origin)
 
 # Сповіщення про заявки в Telegram (необов'язково)
 TELEGRAM_BOT_TOKEN = os.environ.get('TELEGRAM_BOT_TOKEN', '')

@@ -660,16 +660,22 @@
             errBox.classList.add('hidden');
             btn.disabled = true;
             try {
+                const csrfToken = form.querySelector('[name=csrfmiddlewaretoken]')?.value || '';
                 const res = await fetch(form.action, {
                     method: 'POST',
                     body: new FormData(form),
-                    headers: { 'X-Requested-With': 'XMLHttpRequest' }
+                    headers: {
+                        'X-Requested-With': 'XMLHttpRequest',
+                        'X-CSRFToken': csrfToken
+                    }
                 });
-                if (!res.ok) throw new Error('bad status ' + res.status);
+                const data = await res.json().catch(() => ({}));
+                if (!res.ok || !data.ok) throw new Error('status ' + res.status);
                 form.reset();
                 formBox.classList.add('hidden');
                 successBox.classList.remove('hidden');
             } catch (err) {
+                console.error('Помилка відправки форми:', err);
                 errBox.classList.remove('hidden');
             } finally {
                 btn.disabled = false;
