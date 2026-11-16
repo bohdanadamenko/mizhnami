@@ -1,2 +1,2 @@
 # mizhnami
-psytheraphy
+psy_theraphy
