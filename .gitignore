@@ -3,7 +3,6 @@ __pycache__/
 db.sqlite3
 .env
 *.pyc
-staticfiles/
 .env.local
 node_modules/
 .vercel
