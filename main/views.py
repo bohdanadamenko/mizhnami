@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.http import JsonResponse
 from django.shortcuts import render
 from django.views.decorators.http import require_POST
@@ -11,6 +12,8 @@ def index(request):
     return render(request, 'main/index.html', {
         'topics': get_topics(),
         'states': get_states(),
+        'telegram_url': getattr(settings, 'TELEGRAM_DIRECT_URL', 'https://t.me/prostir_mizhnami_bot'),
+        'whatsapp_url': getattr(settings, 'WHATSAPP_DIRECT_URL', 'https://wa.me/380000000000'),
     })
 
 

@@ -70,6 +70,10 @@ for _h in (os.environ.get('VERCEL_URL'), os.environ.get('VERCEL_PROJECT_PRODUCTI
 TELEGRAM_BOT_TOKEN = os.environ.get('TELEGRAM_BOT_TOKEN', '')
 TELEGRAM_CHAT_ID = os.environ.get('TELEGRAM_CHAT_ID', '')
 
+# Прямі посилання для зв'язку в месенджерах без форми
+TELEGRAM_DIRECT_URL = os.environ.get('TELEGRAM_DIRECT_URL', 'https://t.me/prostir_mizhnami_bot')
+WHATSAPP_DIRECT_URL = os.environ.get('WHATSAPP_DIRECT_URL', 'https://wa.me/380000000000')
+
 
 
 # Application definition
